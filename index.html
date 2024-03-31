@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Números Aleatorios</title>
+    <title>Generador de Números Aleatorios sdasdasda</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
@@ -32,6 +32,9 @@
         }
         .numberBox.selected {
             background-color: black;
+            color: black;
+        }
+        .numberBox.selected span {
             color: white;
         }
     </style>
@@ -43,12 +46,12 @@
 <img id="premios" src="premios.jpg" alt="Premios" width="200">
 
 <div id="numbersContainer">
-    <div class="numberBox">0</div>
-    <div class="numberBox">0</div>
-    <div class="numberBox">0</div>
-    <div class="numberBox">0</div>
-    <div class="numberBox">0</div>
-    <div class="numberBox">0</div>
+    <div class="numberBox"><span>0</span></div>
+    <div class="numberBox"><span>0</span></div>
+    <div class="numberBox"><span>0</span></div>
+    <div class="numberBox"><span>0</span></div>
+    <div class="numberBox"><span>0</span></div>
+    <div class="numberBox"><span>0</span></div>
 </div>
 
 <button onclick="startRandomNumbers()">Iniciar</button>
@@ -57,7 +60,7 @@
 <table id="resultTable" border="1" style="margin-top: 20px;">
     <thead>
         <tr>
-            <th>Númerao</th>
+            <th>Número</th>
             <th>Premio</th>
         </tr>
     </thead>
@@ -113,6 +116,7 @@
         const numberBoxes = document.querySelectorAll('.numberBox');
         numberBoxes.forEach(box => {
             box.classList.add('selected');
+            box.innerHTML = `<span>${box.textContent}</span>`;
         });
     }
 
@@ -127,7 +131,8 @@
 
     function updateNumber(index) {
         numbers[index] = Math.floor(Math.random() * csvData.length);
-        document.querySelectorAll('.numberBox')[index].innerHTML = numbers[index];
+        const numberBox = document.querySelectorAll('.numberBox')[index];
+        numberBox.innerHTML = `<span>${numbers[index]}</span>`;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -139,8 +144,10 @@
         box.addEventListener('click', function() {
             if (this.classList.contains('selected')) {
                 this.classList.remove('selected');
+                this.innerHTML = `<span>${this.textContent}</span>`;
             } else {
                 this.classList.add('selected');
+                this.innerHTML = `<span style="color: white;">${this.textContent}</span>`;
             }
         });
     });
