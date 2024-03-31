@@ -3,52 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random CSV Rows</title>
+    <title>Generador de Números Aleatorios</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            text-align: center;
+        }
+        #container {
+            display: inline-block;
+            text-align: left;
+        }
+        #numbersContainer {
+            display: flex;
+            justify-content: center;
+        }
+        .numberBox {
+            margin: 10px;
+            font-size: 24px;
+            border: 1px solid black;
+            padding: 10px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Random CSV Rows</h1>
+<h1>Generador de Números Aleatorios</h1>
 
-<button onclick="loadRandomRow()">Generar fila aleatoria</button>
+<img id="premios" src="premios.jpg" alt="Premios" width="200">
 
-<table id="csvTable" border="1">
-    <!-- La tabla se llenará con las filas del CSV -->
+<div id="numbersContainer">
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+</div>
+
+<button onclick="startRandomNumbers()">Iniciar</button>
+<button onclick="stopRandomNumbers()">Parar</button>
+
+<table id="resultTable" border="1">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Premio</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Los resultados se mostrarán aquí -->
+    </tbody>
 </table>
 
 <script>
-    function loadRandomRow() {
-        fetch('data.csv')
+    let intervalIds = [];
+    let numbers = [];
+    let csvData = [];
+
+    function loadCSVData() {
+        fetch('base.csv')
             .then(response => response.text())
             .then(text => {
                 const rows = text.trim().split('\n');
-                const headers = rows[0].split(',');
-
-                // Eliminar la primera fila (encabezados)
-                rows.shift();
-
-                // Elegir una fila aleatoria
-                const randomRow = rows[Math.floor(Math.random() * rows.length)];
-
-                // Crear una tabla con la fila aleatoria
-                let tableHtml = '<thead><tr>';
-                headers.forEach(header => {
-                    tableHtml += `<th>${header}</th>`;
-                });
-                tableHtml += '</tr></thead><tbody><tr>';
-                
-                randomRow.split(',').forEach(cell => {
-                    tableHtml += `<td>${cell}</td>`;
-                });
-
-                tableHtml += '</tr></tbody>';
-                
-                document.getElementById('csvTable').innerHTML = tableHtml;
+                csvData = rows.map(row => row.split(','));
             })
             .catch(error => {
                 console.error('Error al cargar el archivo CSV:', error);
             });
     }
+
+    function startRandomNumbers() {
+        loadCSVData();
+        resetNumbers();
+
+        intervalIds = [
+            setInterval(() => updateNumber(0), 100),
+            setInterval(() => updateNumber(1), 100),
+            setInterval(() => updateNumber(2), 100),
+            setInterval(() => updateNumber(3), 100),
+            setInterval(() => updateNumber(4), 100),
+            setInterval(() => updateNumber(5), 100),
+        ];
+    }
+
+    function stopRandomNumbers() {
+        intervalIds.forEach(id => clearInterval(id));
+
+        const tableBody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = '';
+        numbers.forEach((number, index) => {
+            const row = tableBody.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            cell1.innerHTML = number;
+            cell2.innerHTML = csvData[number][1];
+        });
+    }
+
+    function resetNumbers() {
+        numbers = [0, 0, 0, 0, 0, 0];
+        const numberBoxes = document.querySelectorAll('.numberBox');
+        numberBoxes.forEach((box, index) => {
+            box.innerHTML = numbers[index];
+        });
+    }
+
+    function updateNumber(index) {
+        numbers[index] = Math.floor(Math.random() * csvData.length);
+        document.querySelectorAll('.numberBox')[index].innerHTML = numbers[index];
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadCSVData();
+    });
 </script>
 
 </body>
