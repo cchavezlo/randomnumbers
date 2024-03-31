@@ -31,13 +31,14 @@
             color: black;
             cursor: pointer;
         }
-        .numberBox.active {
+        .selected {
             background-color: white;
             color: black;
         }
-        #resultTable {
+        table {
             margin-top: 20px;
-            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -48,12 +49,12 @@
 <img id="premios" src="premios.jpg" alt="Premios" width="200">
 
 <div id="numbersContainer">
-    <div class="numberBox">0</div>
-    <div class="numberBox">0</div>
-    <div class="numberBox">0</div>
-    <div class="numberBox">0</div>
-    <div class="numberBox">0</div>
-    <div class="numberBox">0</div>
+    <div class="numberBox" onclick="toggleSelection(0)">0</div>
+    <div class="numberBox" onclick="toggleSelection(1)">0</div>
+    <div class="numberBox" onclick="toggleSelection(2)">0</div>
+    <div class="numberBox" onclick="toggleSelection(3)">0</div>
+    <div class="numberBox" onclick="toggleSelection(4)">0</div>
+    <div class="numberBox" onclick="toggleSelection(5)">0</div>
 </div>
 
 <button onclick="startRandomNumbers()">Iniciar</button>
@@ -62,8 +63,8 @@
 <table id="resultTable" border="1">
     <thead>
         <tr>
-            <th>Número</th>
-            <th>Premasdadsasdio</th>
+            <th>NúmeroCentrado</th>
+            <th>Premio</th>
         </tr>
     </thead>
     <tbody>
@@ -114,6 +115,21 @@
             cell1.innerHTML = number;
             cell2.innerHTML = csvData[number][1];
         });
+
+        const numberBoxes = document.querySelectorAll('.numberBox');
+        numberBoxes.forEach(box => {
+            box.style.backgroundColor = 'black';
+            box.style.color = 'black';
+        });
+    }
+
+    function toggleSelection(index) {
+        const numberBox = document.querySelectorAll('.numberBox')[index];
+        if (numberBox.classList.contains('selected')) {
+            numberBox.classList.remove('selected');
+        } else {
+            numberBox.classList.add('selected');
+        }
     }
 
     function resetNumbers() {
@@ -121,18 +137,13 @@
         const numberBoxes = document.querySelectorAll('.numberBox');
         numberBoxes.forEach((box, index) => {
             box.innerHTML = numbers[index];
-            box.classList.remove('active');
+            box.classList.remove('selected');
         });
     }
 
     function updateNumber(index) {
         numbers[index] = Math.floor(Math.random() * csvData.length);
-        const numberBoxes = document.querySelectorAll('.numberBox');
-        numberBoxes[index].innerHTML = numbers[index];
-        numberBoxes[index].classList.add('active');
-        numberBoxes[index].addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
+        document.querySelectorAll('.numberBox')[index].innerHTML = numbers[index];
     }
 
     document.addEventListener('DOMContentLoaded', () => {
