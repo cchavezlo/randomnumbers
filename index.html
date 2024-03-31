@@ -82,7 +82,7 @@
     const prizes = ['A', 'B', 'C', 'D', 'E', 'F'];
 
     function loadCSVData() {
-        fetch('base.csv')
+        fetch('baseultima.csv')
             .then(response => response.text())
             .then(text => {
                 const rows = text.trim().split('\n');
