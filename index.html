@@ -8,6 +8,11 @@
     <style>
         body {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
         #container {
             display: inline-block;
@@ -37,18 +42,11 @@
         .numberBox.selected span {
             color: white;
         }
-        table#resultTable {
-            margin-top: 20px;
-            margin-left: auto;
-            margin-right: auto;
-        }
     </style>
 </head>
 <body>
 
-<h1>Generador de Números Aleatorios</h1>
-
-<img id="premios" src="premios.jpg" alt="Premios" width="200">
+<h1>randoooomms</h1>
 
 <div id="numbersContainer">
     <div class="numberBox"><span>0</span></div>
@@ -62,10 +60,10 @@
 <button onclick="startRandomNumbers()">Iniciar</button>
 <button onclick="stopRandomNumbers()">Parar</button>
 
-<table id="resultTable" border="1">
+<table id="resultTable" border="1" style="margin-top: 20px;">
     <thead>
         <tr>
-            <th>Númerpfdfgdfgdfgdfgdo</th>
+            <th>Número</th>
             <th>Premio</th>
         </tr>
     </thead>
@@ -121,6 +119,7 @@
         const numberBoxes = document.querySelectorAll('.numberBox');
         numberBoxes.forEach(box => {
             box.classList.add('selected');
+            box.querySelector('span').style.color = 'black';
         });
     }
 
@@ -128,8 +127,9 @@
         numbers = [0, 0, 0, 0, 0, 0];
         const numberBoxes = document.querySelectorAll('.numberBox');
         numberBoxes.forEach((box, index) => {
-            box.innerHTML = `<span>${numbers[index]}</span>`;
+            box.innerHTML = numbers[index];
             box.classList.remove('selected');
+            box.querySelector('span').style.color = 'black';
         });
     }
 
