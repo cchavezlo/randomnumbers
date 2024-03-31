@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random CSV Rows</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Random CSV Rows</h1>
+
+<button onclick="loadRandomRow()">Generar fila aleatoria</button>
+
+<table id="csvTable" border="1">
+    <!-- La tabla se llenará con las filas del CSV -->
+</table>
+
+<script>
+    function loadRandomRow() {
+        fetch('data.csv')
+            .then(response => response.text())
+            .then(text => {
+                const rows = text.trim().split('\n');
+                const headers = rows[0].split(',');
+
+                // Eliminar la primera fila (encabezados)
+                rows.shift();
+
+                // Elegir una fila aleatoria
+                const randomRow = rows[Math.floor(Math.random() * rows.length)];
+
+                // Crear una tabla con la fila aleatoria
+                let tableHtml = '<thead><tr>';
+                headers.forEach(header => {
+                    tableHtml += `<th>${header}</th>`;
+                });
+                tableHtml += '</tr></thead><tbody><tr>';
+                
+                randomRow.split(',').forEach(cell => {
+                    tableHtml += `<td>${cell}</td>`;
+                });
+
+                tableHtml += '</tr></tbody>';
+                
+                document.getElementById('csvTable').innerHTML = tableHtml;
+            })
+            .catch(error => {
+                console.error('Error al cargar el archivo CSV:', error);
+            });
+    }
+</script>
+
+</body>
+</html>
