@@ -27,18 +27,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: black;
-            color: black;
             cursor: pointer;
-        }
-        .selected {
             background-color: white;
-            color: black;
         }
-        table {
-            margin-top: 20px;
-            margin-left: auto;
-            margin-right: auto;
+        .numberBox.selected {
+            background-color: black;
+            color: white;
         }
     </style>
 </head>
@@ -49,21 +43,21 @@
 <img id="premios" src="premios.jpg" alt="Premios" width="200">
 
 <div id="numbersContainer">
-    <div class="numberBox" onclick="toggleSelection(0)">0</div>
-    <div class="numberBox" onclick="toggleSelection(1)">0</div>
-    <div class="numberBox" onclick="toggleSelection(2)">0</div>
-    <div class="numberBox" onclick="toggleSelection(3)">0</div>
-    <div class="numberBox" onclick="toggleSelection(4)">0</div>
-    <div class="numberBox" onclick="toggleSelection(5)">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
 </div>
 
 <button onclick="startRandomNumbers()">Iniciar</button>
 <button onclick="stopRandomNumbers()">Parar</button>
 
-<table id="resultTable" border="1">
+<table id="resultTable" border="1" style="margin-top: 20px;">
     <thead>
         <tr>
-            <th>NúmeroCentrado</th>
+            <th>Númerao</th>
             <th>Premio</th>
         </tr>
     </thead>
@@ -118,18 +112,8 @@
 
         const numberBoxes = document.querySelectorAll('.numberBox');
         numberBoxes.forEach(box => {
-            box.style.backgroundColor = 'black';
-            box.style.color = 'black';
+            box.classList.add('selected');
         });
-    }
-
-    function toggleSelection(index) {
-        const numberBox = document.querySelectorAll('.numberBox')[index];
-        if (numberBox.classList.contains('selected')) {
-            numberBox.classList.remove('selected');
-        } else {
-            numberBox.classList.add('selected');
-        }
     }
 
     function resetNumbers() {
@@ -148,6 +132,17 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         loadCSVData();
+    });
+
+    const numberBoxes = document.querySelectorAll('.numberBox');
+    numberBoxes.forEach(box => {
+        box.addEventListener('click', function() {
+            if (this.classList.contains('selected')) {
+                this.classList.remove('selected');
+            } else {
+                this.classList.add('selected');
+            }
+        });
     });
 </script>
 
