@@ -27,9 +27,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: black;
+            color: white;
+            cursor: pointer;
         }
-        #resultTable {
-            margin-top: 20px;
+        .numberBox.selected {
+            background-color: white;
+            color: black;
         }
     </style>
 </head>
@@ -51,7 +55,7 @@
 <button onclick="startRandomNumbers()">Iniciar</button>
 <button onclick="stopRandomNumbers()">Parar</button>
 
-<table id="resultTable" border="1">
+<table id="resultTable" border="1" style="margin-top: 20px; margin-left: auto; margin-right: auto;">
     <thead>
         <tr>
             <th>Número</th>
@@ -113,6 +117,7 @@
         const numberBoxes = document.querySelectorAll('.numberBox');
         numberBoxes.forEach((box, index) => {
             box.innerHTML = numbers[index];
+            box.classList.remove('selected');
         });
     }
 
@@ -123,6 +128,13 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         loadCSVData();
+        
+        const numberBoxes = document.querySelectorAll('.numberBox');
+        numberBoxes.forEach((box, index) => {
+            box.addEventListener('click', () => {
+                box.classList.toggle('selected');
+            });
+        });
     });
 </script>
 </body>
