@@ -37,6 +37,11 @@
         .numberBox.selected span {
             color: white;
         }
+        table#resultTable {
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
@@ -57,10 +62,10 @@
 <button onclick="startRandomNumbers()">Iniciar</button>
 <button onclick="stopRandomNumbers()">Parar</button>
 
-<table id="resultTable" border="1" style="margin-top: 20px;">
+<table id="resultTable" border="1">
     <thead>
         <tr>
-            <th>Númsssssssero</th>
+            <th>Númerpfdfgdfgdfgdfgdo</th>
             <th>Premio</th>
         </tr>
     </thead>
@@ -123,7 +128,7 @@
         numbers = [0, 0, 0, 0, 0, 0];
         const numberBoxes = document.querySelectorAll('.numberBox');
         numberBoxes.forEach((box, index) => {
-            box.innerHTML = '<span>' + numbers[index] + '</span>';
+            box.innerHTML = `<span>${numbers[index]}</span>`;
             box.classList.remove('selected');
         });
     }
