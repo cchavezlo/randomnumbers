@@ -8,11 +8,6 @@
     <style>
         body {
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
         }
         #container {
             display: inline-block;
@@ -32,35 +27,28 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            background-color: white;
-        }
-        .numberBox.selected {
-            background-color: black;
-            color: black;
-        }
-        .numberBox.selected span {
-            color: white;
         }
     </style>
 </head>
 <body>
 
-<h1>randoooomms</h1>
+<h1>Generador de Números Aleatorios</h1>
+
+<img id="premios" src="premios.jpg" alt="Premios" width="200">
 
 <div id="numbersContainer">
-    <div class="numberBox"><span>0</span></div>
-    <div class="numberBox"><span>0</span></div>
-    <div class="numberBox"><span>0</span></div>
-    <div class="numberBox"><span>0</span></div>
-    <div class="numberBox"><span>0</span></div>
-    <div class="numberBox"><span>0</span></div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
+    <div class="numberBox">0</div>
 </div>
 
 <button onclick="startRandomNumbers()">Iniciar</button>
 <button onclick="stopRandomNumbers()">Parar</button>
 
-<table id="resultTable" border="1" style="margin-top: 20px;">
+<table id="resultTable" border="1">
     <thead>
         <tr>
             <th>Número</th>
@@ -115,12 +103,6 @@
             cell1.innerHTML = number;
             cell2.innerHTML = csvData[number][1];
         });
-
-        const numberBoxes = document.querySelectorAll('.numberBox');
-        numberBoxes.forEach(box => {
-            box.classList.add('selected');
-            box.querySelector('span').style.color = 'black';
-        });
     }
 
     function resetNumbers() {
@@ -128,31 +110,16 @@
         const numberBoxes = document.querySelectorAll('.numberBox');
         numberBoxes.forEach((box, index) => {
             box.innerHTML = numbers[index];
-            box.classList.remove('selected');
-            box.querySelector('span').style.color = 'black';
         });
     }
 
     function updateNumber(index) {
         numbers[index] = Math.floor(Math.random() * csvData.length);
-        document.querySelectorAll('.numberBox span')[index].innerHTML = numbers[index];
+        document.querySelectorAll('.numberBox')[index].innerHTML = numbers[index];
     }
 
     document.addEventListener('DOMContentLoaded', () => {
         loadCSVData();
-    });
-
-    const numberBoxes = document.querySelectorAll('.numberBox');
-    numberBoxes.forEach(box => {
-        box.addEventListener('click', function() {
-            if (this.classList.contains('selected')) {
-                this.classList.remove('selected');
-                this.querySelector('span').style.color = 'black';
-            } else {
-                this.classList.add('selected');
-                this.querySelector('span').style.color = 'white';
-            }
-        });
     });
 </script>
 
