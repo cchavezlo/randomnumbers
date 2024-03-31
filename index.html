@@ -28,12 +28,16 @@
             align-items: center;
             justify-content: center;
             background-color: black;
-            color: white;
+            color: black;
             cursor: pointer;
         }
-        .numberBox.selected {
+        .numberBox.active {
             background-color: white;
             color: black;
+        }
+        #resultTable {
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -55,11 +59,11 @@
 <button onclick="startRandomNumbers()">Iniciar</button>
 <button onclick="stopRandomNumbers()">Parar</button>
 
-<table id="resultTable" border="1" style="margin-top: 20px; margin-left: auto; margin-right: auto;">
+<table id="resultTable" border="1">
     <thead>
         <tr>
-            <th>Nssúmero</th>
-            <th>Premio</th>
+            <th>Número</th>
+            <th>Premasdadsasdio</th>
         </tr>
     </thead>
     <tbody>
@@ -117,24 +121,22 @@
         const numberBoxes = document.querySelectorAll('.numberBox');
         numberBoxes.forEach((box, index) => {
             box.innerHTML = numbers[index];
-            box.classList.remove('selected');
+            box.classList.remove('active');
         });
     }
 
     function updateNumber(index) {
         numbers[index] = Math.floor(Math.random() * csvData.length);
-        document.querySelectorAll('.numberBox')[index].innerHTML = numbers[index];
+        const numberBoxes = document.querySelectorAll('.numberBox');
+        numberBoxes[index].innerHTML = numbers[index];
+        numberBoxes[index].classList.add('active');
+        numberBoxes[index].addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
         loadCSVData();
-        
-        const numberBoxes = document.querySelectorAll('.numberBox');
-        numberBoxes.forEach((box, index) => {
-            box.addEventListener('click', () => {
-                box.classList.toggle('selected');
-            });
-        });
     });
 </script>
 
