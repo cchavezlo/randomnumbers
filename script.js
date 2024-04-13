@@ -38,7 +38,7 @@ function stopRandomNumbers() {
         const row = tableBody.insertRow();
         const cell1 = row.insertCell(0);
         const cell2 = row.insertCell(1);
-        cell1.innerHTML = index + 1;  // Número de div
+        cell1.innerHTML = intervalIds[index];  // Número de div
         cell2.innerHTML = prizes[index];  // Premio correspondiente
     });
 }
