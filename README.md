@@ -22,6 +22,10 @@ This project is a simple random numbers generator. It displays the generated num
 - `LICENSE`: The license for the project.
 - `README.md`: This file.
 
+## Page Preview
+https://cchavezlo.github.io/randomnumbers/
+
+
 ## License
 
 This project is licensed under the GNU General Public License. See the [LICENSE](LICENSE) file for more details.
